@@ -1,0 +1,6 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=dwm
+Comment=Lightweight tiling window manager
+Exec=dwm-run
+Type=XSession
