@@ -29,10 +29,7 @@ xinitcfg="$HOME/.config/xinit"
 test -f "$xinitcfg/u/$(uname)"       && . "$xinitcfg/u/$(uname)"
 test -f "$xinitcfg/host/$(hostname)" && . "$xinitcfg/host/$(hostname)"
 
-# re-starts dwm when it is killed
-while :; do
-    /usr/local/bin/dwm 2>>.dwm_log
-done  &
+/usr/local/bin/dwm 2>>.dwm_log &
 
 # exit X when dwmstatus (or failsafe xterm) is killed
 if [ $(which dwmstatus) ]; then
