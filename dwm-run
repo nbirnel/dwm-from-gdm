@@ -34,7 +34,18 @@ test -f "$xinitcfg/host/$(hostname)" && . "$xinitcfg/host/$(hostname)"
 # exit X when dwmstatus (or failsafe xterm) is killed
 if [ $(which slstatus) ]; then
     slstatus
-else
+elif [ $(which dwmstatus) ]; then
+    dwmstatus
+elif [ $(which st) ]; then
+    st
+elif [ $(which urxvt) ]; then
+    urxvt
+elif [ $(which uxterm) ]; then
     uxterm -ls -T Failsafe -geometry 80x24-0-0
+elif [ $(which rxvt) ]; then
+    rxvt
+elif [ $(which xterm) ]; then
+    xterm -ls -T Failsafe -geometry 80x24-0-0
+elif [ $(which gnome-terminal) ]; then
+    gmome-terminal
 fi
-
