@@ -32,8 +32,8 @@ test -f "$xinitcfg/host/$(hostname)" && . "$xinitcfg/host/$(hostname)"
 /usr/local/bin/dwm 2>>.dwm_log &
 
 # exit X when dwmstatus (or failsafe xterm) is killed
-if [ $(which dwmstatus) ]; then
-    dwmstatus
+if [ $(which slstatus) ]; then
+    slstatus
 else
     uxterm -ls -T Failsafe -geometry 80x24-0-0
 fi
