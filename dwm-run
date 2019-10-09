@@ -47,5 +47,5 @@ elif [ $(which rxvt) ]; then
 elif [ $(which xterm) ]; then
     xterm -ls -T Failsafe -geometry 80x24-0-0
 elif [ $(which gnome-terminal) ]; then
-    gmome-terminal
+    gnome-terminal
 fi
