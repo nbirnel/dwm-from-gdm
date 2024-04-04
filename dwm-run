@@ -10,7 +10,8 @@ sysmodmap=/etc/X11/xinit/.Xmodmap
 test -f $sysresources    && xrdb -merge  $sysresources
 test -f $sysmodmap       && xmodmap      $sysmodmap
 test -f "$userresources" && xrdb -merge "$userresources"
-test -f "$usermodmap"    && xmodmap     "$usermodmap"
+# lightdm auto applies the usermodmap, this avoids doing that twice
+test -z $(pgrep lightdm | head -n 1) && test -f "$usermodmap" && xmodmap     "$usermodmap"
 
 # start some nice programs
 eval $(ssh-agent)
