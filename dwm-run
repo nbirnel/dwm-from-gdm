@@ -10,17 +10,18 @@ sysmodmap=/etc/X11/xinit/.Xmodmap
 test -f $sysresources    && xrdb -merge  $sysresources
 test -f $sysmodmap       && xmodmap      $sysmodmap
 test -f "$userresources" && xrdb -merge "$userresources"
-test -f "$usermodmap"    && xmodmap     "$usermodmap"
+# lightdm auto applies the usermodmap, this avoids doing that twice
+test -z $(pgrep lightdm | head -n 1) && test -f "$usermodmap" && xmodmap     "$usermodmap"
 
 # start some nice programs
 eval $(ssh-agent)
 
-test $(which xsetroot)  && xsetroot -solid midnightblue &
-test $(which gpg-agent) && eval $(gpg-agent --daemon)
+test $(command -v xsetroot)  && xsetroot -solid midnightblue &
+test $(command -v gpg-agent) && eval $(gpg-agent --daemon)
 
-if [ $(which xbanish) ]; then
+if [ $(command -v xbanish) ]; then
     xbanish >>$HOME/.xbanish.log &    # https://github.com/jcs/xbanish
-elif [ $(which unclutter) ]; then
+elif [ $(command -v unclutter) ]; then
     unclutter &
 fi
 
@@ -32,20 +33,20 @@ test -f "$xinitcfg/host/$(hostname)" && . "$xinitcfg/host/$(hostname)"
 /usr/local/bin/dwm 2>>.dwm_log &
 
 # exit X when dwmstatus (or failsafe xterm) is killed
-if [ $(which slstatus) ]; then
+if [ $(command -v slstatus) ]; then
     slstatus
-elif [ $(which dwmstatus) ]; then
+elif [ $(command -v dwmstatus) ]; then
     dwmstatus
-elif [ $(which st) ]; then
+elif [ $(command -v st) ]; then
     st
-elif [ $(which urxvt) ]; then
+elif [ $(command -v urxvt) ]; then
     urxvt
-elif [ $(which uxterm) ]; then
+elif [ $(command -v uxterm) ]; then
     uxterm -ls -T Failsafe -geometry 80x24-0-0
-elif [ $(which rxvt) ]; then
+elif [ $(command -v rxvt) ]; then
     rxvt
-elif [ $(which xterm) ]; then
+elif [ $(command -v xterm) ]; then
     xterm -ls -T Failsafe -geometry 80x24-0-0
-elif [ $(which gnome-terminal) ]; then
+elif [ $(command -v gnome-terminal) ]; then
     gnome-terminal
 fi
